@@ -3,6 +3,7 @@ import {
   FileText,
   GitBranch,
   LayoutDashboard,
+  ShieldCheck,
 } from "lucide-react";
 
 export function Header() {
@@ -44,6 +45,13 @@ export function Header() {
           <GitBranch className="h-4 w-4" />
           Provenance
         </Link>
+        <Link
+        href="/verification"
+        className="flex flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
+      >
+        <ShieldCheck className="h-4 w-4" />
+        Verification
+      </Link>
       </nav>
     </header>
   );

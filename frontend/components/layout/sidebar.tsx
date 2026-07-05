@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, GitBranch, FileText } from "lucide-react";
+import {
+  FileText,
+  GitBranch,
+  LayoutDashboard,
+  ShieldCheck,
+} from "lucide-react";
 
 const navigation = [
   {
@@ -16,10 +21,15 @@ const navigation = [
     icon: FileText,
   },
   {
-  name: "Provenance Network",
-  href: "/provenance",
-  icon: GitBranch,
-},
+    name: "Provenance Network",
+    href: "/provenance",
+    icon: GitBranch,
+  },
+  {
+    name: "Verification",
+    href: "/verification",
+    icon: ShieldCheck,
+  },
 ];
 
 export function Sidebar() {
@@ -29,6 +39,7 @@ export function Sidebar() {
     <aside className="hidden min-h-screen w-64 border-r bg-background md:block">
       <div className="border-b px-6 py-5">
         <h1 className="text-lg font-semibold">TRACE4MAGNET</h1>
+
         <p className="text-sm text-muted-foreground">
           Digital Magnet Passport
         </p>
@@ -37,6 +48,7 @@ export function Sidebar() {
       <nav className="space-y-1 p-4">
         {navigation.map((item) => {
           const Icon = item.icon;
+
           const isActive =
             pathname === item.href ||
             pathname.startsWith(`${item.href}/`);

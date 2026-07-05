@@ -1,9 +1,9 @@
 import Link from "next/link";
 import {
-  CheckCircle2,
+  FileCheck2,
+  FileClock,
   FileText,
-  Leaf,
-  ShieldCheck,
+  Recycle,
 } from "lucide-react";
 
 import { SummaryCard } from "@/components/dashboard/summary-card";
@@ -16,63 +16,53 @@ import {
 } from "@/components/ui/card";
 import { mockPassports } from "@/data/mock-passports";
 
+const dashboardStats = {
+  totalPassports: 1250,
+  verified: 1100,
+  recycled: 320,
+  pendingAudit: 84,
+};
+
 export default function DashboardPage() {
-  const totalPassports = mockPassports.length;
-
-  const verifiedPassports = mockPassports.filter(
-    (passport) => passport.status === "Verified"
-  ).length;
-
-  const activePassports = mockPassports.filter(
-    (passport) => passport.status === "Active"
-  ).length;
-
-  const averageRecycledContent = Math.round(
-    mockPassports.reduce(
-      (total, passport) => total + passport.recycledContent,
-      0
-    ) / totalPassports
-  );
-
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-semibold tracking-tight">
-          Dashboard
+          Magnetic Asset Overview
         </h1>
 
         <p className="mt-1 text-muted-foreground">
-          Overview of digital magnet passports and verification status.
+          Overview of digital magnet passports and their current status.
         </p>
       </div>
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <SummaryCard
           title="Total Passports"
-          value={totalPassports}
+          value={dashboardStats.totalPassports}
           description="Digital passports currently registered"
           icon={FileText}
         />
 
         <SummaryCard
           title="Verified"
-          value={verifiedPassports}
+          value={dashboardStats.verified}
           description="Passports with completed verification"
-          icon={ShieldCheck}
+          icon={FileCheck2}
         />
 
         <SummaryCard
-          title="Active"
-          value={activePassports}
-          description="Passports currently active"
-          icon={CheckCircle2}
+          title="Recycled"
+          value={dashboardStats.recycled}
+          description="Passports linked to recycled magnetic assets"
+          icon={Recycle}
         />
 
         <SummaryCard
-          title="Average Recycled Content"
-          value={`${averageRecycledContent}%`}
-          description="Average across registered magnets"
-          icon={Leaf}
+          title="Pending Audit"
+          value={dashboardStats.pendingAudit}
+          description="Passports awaiting audit completion"
+          icon={FileClock}
         />
       </section>
 
@@ -92,12 +82,14 @@ export default function DashboardPage() {
                 <p className="font-medium">{passport.passportId}</p>
 
                 <p className="text-sm text-muted-foreground">
-                  {passport.magnetType} · {passport.sector} ·{" "}
+                  {passport.type} · {passport.application} ·{" "}
                   {passport.origin}
                 </p>
               </div>
 
-              <Badge variant="outline">{passport.status}</Badge>
+              <Badge variant="outline">
+                {passport.verificationStatus}
+              </Badge>
             </Link>
           ))}
         </CardContent>

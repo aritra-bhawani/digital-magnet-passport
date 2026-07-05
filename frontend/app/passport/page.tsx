@@ -19,14 +19,7 @@ import {
 import { mockPassports } from "@/data/mock-passports";
 
 function getStatusVariant(status: string) {
-  switch (status) {
-    case "Verified":
-      return "default";
-    case "Active":
-      return "secondary";
-    default:
-      return "outline";
-  }
+  return status === "Verified" ? "default" : "outline";
 }
 
 export default function PassportPage() {
@@ -53,11 +46,12 @@ export default function PassportPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Passport ID</TableHead>
-                  <TableHead>Magnet Type</TableHead>
-                  <TableHead>Sector</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Application</TableHead>
+                  <TableHead>Lifecycle</TableHead>
                   <TableHead>Origin</TableHead>
                   <TableHead>Recycled Content</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>Verification Status</TableHead>
                   <TableHead className="text-right">Action</TableHead>
                 </TableRow>
               </TableHeader>
@@ -69,18 +63,25 @@ export default function PassportPage() {
                       {passport.passportId}
                     </TableCell>
 
-                    <TableCell>{passport.magnetType}</TableCell>
-                    <TableCell>{passport.sector}</TableCell>
+                    <TableCell>{passport.type}</TableCell>
+
+                    <TableCell>{passport.application}</TableCell>
+
+                    <TableCell>{passport.lifecycle}</TableCell>
+
                     <TableCell>{passport.origin}</TableCell>
+
                     <TableCell>
                       {passport.recycledContent}%
                     </TableCell>
 
                     <TableCell>
                       <Badge
-                        variant={getStatusVariant(passport.status)}
+                        variant={getStatusVariant(
+                          passport.verificationStatus
+                        )}
                       >
-                        {passport.status}
+                        {passport.verificationStatus}
                       </Badge>
                     </TableCell>
 

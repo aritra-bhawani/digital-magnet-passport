@@ -1,12 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeft,
-  Factory,
-  Globe2,
-  Leaf,
-  ShieldCheck,
-} from "lucide-react";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,6 +10,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 import { mockPassports } from "@/data/mock-passports";
 
 type PassportDetailsPageProps = {
@@ -25,14 +25,7 @@ type PassportDetailsPageProps = {
 };
 
 function getStatusVariant(status: string) {
-  switch (status) {
-    case "Verified":
-      return "default";
-    case "Active":
-      return "secondary";
-    default:
-      return "outline";
-  }
+  return status === "Verified" ? "default" : "outline";
 }
 
 export default async function PassportDetailsPage({
@@ -69,134 +62,230 @@ export default async function PassportDetailsPage({
         </div>
 
         <Badge
-          variant={getStatusVariant(passport.status)}
+          variant={getStatusVariant(passport.verificationStatus)}
           className="w-fit"
         >
-          {passport.status}
+          {passport.verificationStatus}
         </Badge>
       </div>
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium">
-              <Factory className="h-4 w-4 text-muted-foreground" />
-              Magnet Type
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-semibold">
-              {passport.magnetType}
-            </p>
-          </CardContent>
-        </Card>
+      <Tabs defaultValue="overview" className="space-y-4">
+        <TabsList className="h-auto flex-wrap">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="composition">Composition</TabsTrigger>
+          <TabsTrigger value="provenance">Provenance</TabsTrigger>
+          <TabsTrigger value="circularity">Circularity</TabsTrigger>
+          <TabsTrigger value="verification">Verification</TabsTrigger>
+        </TabsList>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium">
-              <ShieldCheck className="h-4 w-4 text-muted-foreground" />
-              Sector
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-semibold">
-              {passport.sector}
-            </p>
-          </CardContent>
-        </Card>
+        <TabsContent value="overview">
+          <Card>
+            <CardHeader>
+              <CardTitle>Overview</CardTitle>
+            </CardHeader>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium">
-              <Globe2 className="h-4 w-4 text-muted-foreground" />
-              Origin
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-semibold">
-              {passport.origin}
-            </p>
-          </CardContent>
-        </Card>
+            <CardContent>
+              <dl className="grid gap-6 sm:grid-cols-2">
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Passport ID
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.passportId}
+                  </dd>
+                </div>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium">
-              <Leaf className="h-4 w-4 text-muted-foreground" />
-              Recycled Content
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-semibold">
-              {passport.recycledContent}%
-            </p>
-          </CardContent>
-        </Card>
-      </section>
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Type
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.type}
+                  </dd>
+                </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Passport Information</CardTitle>
-        </CardHeader>
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Application
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.application}
+                  </dd>
+                </div>
 
-        <CardContent>
-          <dl className="grid gap-6 sm:grid-cols-2">
-            <div>
-              <dt className="text-sm text-muted-foreground">
-                Passport ID
-              </dt>
-              <dd className="mt-1 font-medium">
-                {passport.passportId}
-              </dd>
-            </div>
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Lifecycle
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.lifecycle}
+                  </dd>
+                </div>
 
-            <div>
-              <dt className="text-sm text-muted-foreground">
-                Verification Status
-              </dt>
-              <dd className="mt-1 font-medium">
-                {passport.status}
-              </dd>
-            </div>
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Origin
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.origin}
+                  </dd>
+                </div>
 
-            <div>
-              <dt className="text-sm text-muted-foreground">
-                Magnet Type
-              </dt>
-              <dd className="mt-1 font-medium">
-                {passport.magnetType}
-              </dd>
-            </div>
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Recycled Content
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.recycledContent}%
+                  </dd>
+                </div>
 
-            <div>
-              <dt className="text-sm text-muted-foreground">
-                Application Sector
-              </dt>
-              <dd className="mt-1 font-medium">
-                {passport.sector}
-              </dd>
-            </div>
+                <div className="sm:col-span-2">
+                  <dt className="text-sm text-muted-foreground">
+                    Compliance
+                  </dt>
 
-            <div>
-              <dt className="text-sm text-muted-foreground">
-                Country of Origin
-              </dt>
-              <dd className="mt-1 font-medium">
-                {passport.origin}
-              </dd>
-            </div>
+                  <dd className="mt-2 flex flex-wrap gap-3">
+                    {passport.compliance.cbam && (
+                      <span className="flex items-center gap-2 font-medium">
+                        <CheckCircle2 className="h-4 w-4" />
+                        CBAM
+                      </span>
+                    )}
 
-            <div>
-              <dt className="text-sm text-muted-foreground">
-                Recycled Material
-              </dt>
-              <dd className="mt-1 font-medium">
-                {passport.recycledContent}%
-              </dd>
-            </div>
-          </dl>
-        </CardContent>
-      </Card>
+                    {passport.compliance.crma && (
+                      <span className="flex items-center gap-2 font-medium">
+                        <CheckCircle2 className="h-4 w-4" />
+                        CRMA
+                      </span>
+                    )}
+                  </dd>
+                </div>
+              </dl>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="composition">
+          <Card>
+            <CardHeader>
+              <CardTitle>Composition</CardTitle>
+            </CardHeader>
+
+            <CardContent>
+              <dl className="grid gap-4 sm:grid-cols-2">
+                {Object.entries(passport.composition).map(
+                  ([element, visibility]) => (
+                    <div
+                      key={element}
+                      className="flex items-center justify-between rounded-lg border p-4"
+                    >
+                      <dt className="font-medium">{element}</dt>
+                      <dd className="text-muted-foreground">
+                        {visibility}
+                      </dd>
+                    </div>
+                  )
+                )}
+              </dl>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="provenance">
+          <Card>
+            <CardHeader>
+              <CardTitle>Provenance</CardTitle>
+            </CardHeader>
+
+            <CardContent>
+              <dl>
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Origin
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.origin}
+                  </dd>
+                </div>
+              </dl>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="circularity">
+          <Card>
+            <CardHeader>
+              <CardTitle>Circularity</CardTitle>
+            </CardHeader>
+
+            <CardContent>
+              <dl className="grid gap-6 sm:grid-cols-2">
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Lifecycle
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.lifecycle}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Recycled Content
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.recycledContent}%
+                  </dd>
+                </div>
+              </dl>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="verification">
+          <Card>
+            <CardHeader>
+              <CardTitle>Verification</CardTitle>
+            </CardHeader>
+
+            <CardContent>
+              <dl className="grid gap-6 sm:grid-cols-2">
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Verification Status
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.verificationStatus}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    CBAM
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.compliance.cbam
+                      ? "Compliant"
+                      : "Not Compliant"}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    CRMA
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.compliance.crma
+                      ? "Compliant"
+                      : "Not Compliant"}
+                  </dd>
+                </div>
+              </dl>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

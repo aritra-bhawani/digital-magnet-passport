@@ -1,4 +1,3 @@
-import { ProvenanceTimeline } from "@/components/provenance/provenance-timeline";
 import { SupplyChainGraph } from "@/components/provenance/supply-chain-graph";
 
 export default function ProvenancePage() {
@@ -13,8 +12,6 @@ export default function ProvenancePage() {
           Explore the magnet supply chain from S1 mining to S6 recycling.
         </p>
       </div>
-
-      <ProvenanceTimeline />
 
       <SupplyChainGraph />
     </div>

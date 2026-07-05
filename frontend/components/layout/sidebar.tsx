@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText } from "lucide-react";
+import { LayoutDashboard, GitBranch, FileText } from "lucide-react";
 
 const navigation = [
   {
@@ -15,6 +15,11 @@ const navigation = [
     href: "/passport",
     icon: FileText,
   },
+  {
+  name: "Provenance Network",
+  href: "/provenance",
+  icon: GitBranch,
+},
 ];
 
 export function Sidebar() {

@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { FileText, LayoutDashboard } from "lucide-react";
+import {
+  FileText,
+  GitBranch,
+  LayoutDashboard,
+} from "lucide-react";
 
 export function Header() {
   return (
@@ -31,6 +35,14 @@ export function Header() {
         >
           <FileText className="h-4 w-4" />
           Passports
+        </Link>
+
+        <Link
+          href="/provenance"
+          className="flex flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
+        >
+          <GitBranch className="h-4 w-4" />
+          Provenance
         </Link>
       </nav>
     </header>

@@ -1,0 +1,27 @@
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import sessionmaker, DeclarativeBase
+from app.config import settings
+
+class Base(DeclarativeBase):
+    pass
+
+engine = create_engine(settings.database_url)
+SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
+
+def init_db():
+    # create db if not there, then create tables
+    db_name = settings.database_url.rsplit("/", 1)[-1]
+    base_url = settings.database_url.rsplit("/", 1)[0]
+    tmp = create_engine(base_url + "/", isolation_level="AUTOCOMMIT")
+    with tmp.connect() as conn:
+        conn.execute(text(f"CREATE DATABASE IF NOT EXISTS `{db_name}`"))
+    tmp.dispose()
+    import app.models.passport
+    Base.metadata.create_all(bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

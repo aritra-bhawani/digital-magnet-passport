@@ -8,5 +8,7 @@ class Settings(BaseSettings):
     debug: bool = False
     api_v1_prefix: str = "/api/v1"
 
+    database_url: str = "mysql+pymysql://user:password@localhost:3306/digital_magnet"
+
 
 settings = Settings()

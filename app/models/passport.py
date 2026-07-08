@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Float, Date, DateTime
+from sqlalchemy import Column, Integer, String, Float, Date, DateTime, Boolean
 from app.database import Base
 
 class Passport(Base):
@@ -14,6 +14,6 @@ class Passport(Base):
     country_of_origin = Column(String(100), nullable=False)
     recycled_content = Column(Float, nullable=True)
     carbon_footprint = Column(Float, nullable=True)
-    status = Column(String(50), nullable=False, default="active")
+    status = Column(Boolean, nullable=False, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

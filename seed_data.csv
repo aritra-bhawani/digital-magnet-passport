@@ -1,0 +1,16 @@
+passport_id,magnet_type,application_sector,current_stage,manufacturing_date,country_of_origin,recycled_content,carbon_footprint,status,created_at,updated_at
+DMP-2024-001,NdFeB,EV Motors,Manufacturing,2024-03-15,Germany,12.5,48.3,1,2024-03-15 09:00:00,2024-03-15 09:00:00
+DMP-2024-002,SmCo,Aerospace,Testing,2024-01-20,Japan,8.0,62.1,1,2024-01-20 10:30:00,2024-01-20 10:30:00
+DMP-2024-003,NdFeB,Wind Energy,Deployed,2023-11-10,China,22.3,41.7,1,2023-11-10 08:15:00,2023-11-10 08:15:00
+DMP-2024-004,Ferrite,Consumer Electronics,Deployed,2023-08-05,South Korea,35.0,18.2,1,2023-08-05 11:00:00,2023-08-05 11:00:00
+DMP-2024-005,NdFeB,Industrial Motors,Design,2024-05-22,Germany,15.8,53.9,1,2024-05-22 14:00:00,2024-05-22 14:00:00
+DMP-2024-006,AlNiCo,Medical Devices,Testing,2024-02-18,USA,5.2,29.4,1,2024-02-18 09:45:00,2024-02-18 09:45:00
+DMP-2024-007,NdFeB,EV Motors,Deployed,2023-06-30,China,18.0,44.6,1,2023-06-30 13:00:00,2023-06-30 13:00:00
+DMP-2024-008,SmCo,Aerospace,Manufacturing,2024-04-11,France,6.5,71.2,1,2024-04-11 10:00:00,2024-04-11 10:00:00
+DMP-2024-009,Ferrite,Consumer Electronics,End of Life,2022-12-01,South Korea,40.0,16.8,0,2022-12-01 08:00:00,2022-12-01 08:00:00
+DMP-2024-010,NdFeB,Wind Energy,Manufacturing,2024-03-28,Germany,20.1,46.5,1,2024-03-28 12:30:00,2024-03-28 12:30:00
+DMP-2024-011,AlNiCo,Industrial Motors,Deployed,2023-09-14,USA,4.8,31.0,1,2023-09-14 09:00:00,2023-09-14 09:00:00
+DMP-2024-012,NdFeB,EV Motors,Testing,2024-06-01,Japan,14.2,50.7,1,2024-06-01 11:15:00,2024-06-01 11:15:00
+DMP-2024-013,Ferrite,Consumer Electronics,Deployed,2023-04-17,China,38.5,15.3,1,2023-04-17 10:00:00,2023-04-17 10:00:00
+DMP-2024-014,SmCo,Medical Devices,Design,2024-07-05,France,7.1,68.4,1,2024-07-05 14:30:00,2024-07-05 14:30:00
+DMP-2024-015,NdFeB,Wind Energy,End of Life,2021-10-22,Germany,25.0,43.1,0,2021-10-22 08:00:00,2021-10-22 08:00:00

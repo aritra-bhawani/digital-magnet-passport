@@ -1,4 +1,5 @@
-import { SupplyChainGraph } from "@/components/provenance/supply-chain-graph";
+import { ProvenanceTimeline } from "@/components/provenance/provenance-timeline";
+import { RoleAwareProvenance } from "@/components/provenance/role-aware-provenance";
 
 export default function ProvenancePage() {
   return (
@@ -13,7 +14,9 @@ export default function ProvenancePage() {
         </p>
       </div>
 
-      <SupplyChainGraph />
+      <ProvenanceTimeline />
+
+      <RoleAwareProvenance />
     </div>
   );
 }

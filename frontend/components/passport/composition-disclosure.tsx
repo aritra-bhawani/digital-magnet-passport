@@ -1,26 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { CheckCircle2, CircleX } from "lucide-react";
+import {
+  CheckCircle2,
+  CircleX,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getCompositionDisclosureLevel } from "@/lib/access-policy";
+import { useRoleStore } from "@/store/role-store";
 import type { CompositionElement } from "@/types/passport";
-
-const roles = [
-  "Public",
-  "Manufacturer",
-  "Recycler",
-  "Auditor",
-  "Regulator",
-] as const;
-
-type Role = (typeof roles)[number];
 
 type CompositionDisclosureProps = {
   composition: CompositionElement[];
@@ -29,52 +22,25 @@ type CompositionDisclosureProps = {
 export function CompositionDisclosure({
   composition,
 }: CompositionDisclosureProps) {
-  const [selectedRole, setSelectedRole] =
-    useState<Role>("Public");
+  const role = useRoleStore((state) => state.role);
 
-  const showExactValues =
-    selectedRole === "Manufacturer" ||
-    selectedRole === "Recycler";
-
-  const showRanges =
-    selectedRole === "Auditor" ||
-    selectedRole === "Regulator";
+  const disclosureLevel =
+    getCompositionDisclosureLevel(role);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Composition Disclosure</CardTitle>
+        <CardTitle>Composition</CardTitle>
       </CardHeader>
 
       <CardContent className="space-y-6">
-        <div className="flex flex-wrap gap-2">
-          {roles.map((role) => (
-            <Button
-              key={role}
-              type="button"
-              variant={
-                selectedRole === role
-                  ? "default"
-                  : "outline"
-              }
-              onClick={() => setSelectedRole(role)}
-            >
-              {role}
-            </Button>
-          ))}
-        </div>
-
         <div className="rounded-lg border p-4">
           <p className="text-sm text-muted-foreground">
-            Current disclosure level
+            Disclosure level
           </p>
 
-          <p className="mt-1 font-medium">
-            {showExactValues
-              ? "Exact Value"
-              : showRanges
-                ? "Range"
-                : "Presence"}
+          <p className="mt-1 font-medium capitalize">
+            {disclosureLevel}
           </p>
         </div>
 
@@ -97,18 +63,22 @@ export function CompositionDisclosure({
               </div>
 
               <div className="mt-3 text-sm text-muted-foreground">
-                {showExactValues ? (
+                {disclosureLevel === "exact" && (
                   <p>
                     {element.exactValue !== null
                       ? `${element.exactValue}${element.unit}`
                       : "Exact value not available"}
                   </p>
-                ) : showRanges ? (
+                )}
+
+                {disclosureLevel === "range" && (
                   <p>
                     {element.range ??
                       "Range not available"}
                   </p>
-                ) : (
+                )}
+
+                {disclosureLevel === "presence" && (
                   <p>
                     {element.present
                       ? `Contains ${element.symbol}`

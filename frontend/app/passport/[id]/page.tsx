@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeft,
-  CheckCircle2,
-  CircleX,
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
+import { DemoRoleSelector } from "@/components/compliance/demo-role-selector";
+import { CompositionDisclosure } from "@/components/passport/composition-disclosure";
+import { RoleAwarePassportData } from "@/components/passport/role-aware-passport-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +20,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import { mockPassports } from "@/data/mock-passports";
-import { CompositionDisclosure } from "@/components/passport/composition-disclosure";
+
 type PassportDetailsPageProps = {
   params: Promise<{
     id: string;
@@ -65,8 +64,8 @@ export default async function PassportDetailsPage({
           </h1>
 
           <p className="mt-1 text-muted-foreground">
-            Digital magnet passport details, composition,
-            performance, provenance and compliance information.
+            Digital magnet passport details, composition, performance,
+            provenance, compliance and verification information.
           </p>
         </div>
 
@@ -80,8 +79,10 @@ export default async function PassportDetailsPage({
         </Badge>
       </div>
 
+      <DemoRoleSelector />
+
       <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList className="h-auto flex-wrap">
+        <TabsList className="flex h-auto w-full flex-wrap justify-start gap-1">
           <TabsTrigger value="overview">
             Overview
           </TabsTrigger>
@@ -121,6 +122,33 @@ export default async function PassportDetailsPage({
               <dl className="grid gap-6 sm:grid-cols-2">
                 <div>
                   <dt className="text-sm text-muted-foreground">
+                    Passport ID
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.passportId}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Type
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.type}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Application
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.application}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
                     Origin
                   </dt>
                   <dd className="mt-1 font-medium">
@@ -137,14 +165,10 @@ export default async function PassportDetailsPage({
                   </dd>
                 </div>
 
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Recycled Content
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {passport.recycledContent}%
-                  </dd>
-                </div>
+                <RoleAwarePassportData
+                  passport={passport}
+                  section="recycled-content"
+                />
 
                 <div>
                   <dt className="text-sm text-muted-foreground">
@@ -216,64 +240,10 @@ export default async function PassportDetailsPage({
             </CardHeader>
 
             <CardContent>
-              <dl className="grid gap-6 sm:grid-cols-2">
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Grade
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {displayValue(
-                      passport.performance.grade
-                    )}
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Coercivity
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {displayValue(
-                      passport.performance.coercivity
-                    )}
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Remanence
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {displayValue(
-                      passport.performance.remanence
-                    )}
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Temperature Class
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {displayValue(
-                      passport.performance
-                        .temperatureClass
-                    )}
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Performance Category
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {displayValue(
-                      passport.performance
-                        .performanceCategory
-                    )}
-                  </dd>
-                </div>
-              </dl>
+              <RoleAwarePassportData
+                passport={passport}
+                section="performance"
+              />
             </CardContent>
           </Card>
         </TabsContent>
@@ -285,25 +255,10 @@ export default async function PassportDetailsPage({
             </CardHeader>
 
             <CardContent>
-              <dl className="grid gap-6 sm:grid-cols-2">
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Origin
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {passport.origin}
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Current Stage
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {passport.currentStage}
-                  </dd>
-                </div>
-              </dl>
+              <RoleAwarePassportData
+                passport={passport}
+                section="provenance"
+              />
             </CardContent>
           </Card>
         </TabsContent>
@@ -325,14 +280,10 @@ export default async function PassportDetailsPage({
                   </dd>
                 </div>
 
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Recycled Content
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {passport.recycledContent}%
-                  </dd>
-                </div>
+                <RoleAwarePassportData
+                  passport={passport}
+                  section="recycled-content"
+                />
               </dl>
             </CardContent>
           </Card>
@@ -347,7 +298,7 @@ export default async function PassportDetailsPage({
             </CardHeader>
 
             <CardContent>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {passport.certifications.map(
                   (certification) => (
                     <div
@@ -380,6 +331,7 @@ export default async function PassportDetailsPage({
                 <p className="text-sm text-muted-foreground">
                   Verification Status
                 </p>
+
                 <p className="mt-1 font-medium">
                   {passport.verificationStatus}
                 </p>
@@ -399,6 +351,10 @@ export default async function PassportDetailsPage({
 
               <div className="rounded-lg border p-4">
                 ✓ Origin Verified
+              </div>
+
+              <div className="rounded-lg border p-4">
+                ✓ Conflict-Free Source
               </div>
 
               <div className="rounded-lg border p-4">

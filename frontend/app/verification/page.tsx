@@ -1,4 +1,4 @@
-import { RoleSelector } from "@/components/compliance/role-selector";
+import { DemoRoleSelector } from "@/components/compliance/demo-role-selector";
 import { VerificationCard } from "@/components/compliance/verification-card";
 import {
   Card,
@@ -58,7 +58,7 @@ export default function VerificationPage() {
         </CardContent>
       </Card>
 
-      <RoleSelector />
+      <DemoRoleSelector />
     </div>
   );
 }

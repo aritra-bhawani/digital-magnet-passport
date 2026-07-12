@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
@@ -17,12 +19,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { mockPassports } from "@/data/mock-passports";
+import { canViewExactRecycledContent } from "@/lib/access-policy";
+import { useRoleStore } from "@/store/role-store";
 
 function getStatusVariant(status: string) {
   return status === "Verified" ? "default" : "outline";
 }
 
 export default function PassportPage() {
+  const role = useRoleStore((state) => state.role);
+
+  const canViewExact =
+    canViewExactRecycledContent(role);
+
   return (
     <div className="space-y-6">
       <div>
@@ -51,8 +60,12 @@ export default function PassportPage() {
                   <TableHead>Lifecycle</TableHead>
                   <TableHead>Origin</TableHead>
                   <TableHead>Recycled Content</TableHead>
-                  <TableHead>Verification Status</TableHead>
-                  <TableHead className="text-right">Action</TableHead>
+                  <TableHead>
+                    Verification Status
+                  </TableHead>
+                  <TableHead className="text-right">
+                    Action
+                  </TableHead>
                 </TableRow>
               </TableHeader>
 
@@ -63,16 +76,26 @@ export default function PassportPage() {
                       {passport.passportId}
                     </TableCell>
 
-                    <TableCell>{passport.type}</TableCell>
-
-                    <TableCell>{passport.application}</TableCell>
-
-                    <TableCell>{passport.lifecycle}</TableCell>
-
-                    <TableCell>{passport.origin}</TableCell>
+                    <TableCell>
+                      {passport.type}
+                    </TableCell>
 
                     <TableCell>
-                      {passport.recycledContent}%
+                      {passport.application}
+                    </TableCell>
+
+                    <TableCell>
+                      {passport.lifecycle}
+                    </TableCell>
+
+                    <TableCell>
+                      {passport.origin}
+                    </TableCell>
+
+                    <TableCell>
+                      {canViewExact
+                        ? `${passport.recycledContent}%`
+                        : "Verified > 20%"}
                     </TableCell>
 
                     <TableCell>
@@ -86,7 +109,11 @@ export default function PassportPage() {
                     </TableCell>
 
                     <TableCell className="text-right">
-                      <Button asChild size="sm" variant="outline">
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="outline"
+                      >
                         <Link
                           href={`/passport/${passport.passportId}`}
                         >

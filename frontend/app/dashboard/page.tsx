@@ -8,6 +8,7 @@ import {
 
 import { SummaryCard } from "@/components/dashboard/summary-card";
 import { Badge } from "@/components/ui/badge";
+import { ComplianceOverview } from "@/components/compliance/compliance-overview";
 import {
   Card,
   CardContent,
@@ -65,7 +66,7 @@ export default function DashboardPage() {
           icon={FileClock}
         />
       </section>
-
+      <ComplianceOverview />
       <Card>
         <CardHeader>
           <CardTitle>Recent Passports</CardTitle>

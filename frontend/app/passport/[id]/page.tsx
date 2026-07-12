@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  CircleX,
+} from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -26,6 +30,10 @@ type PassportDetailsPageProps = {
 
 function getStatusVariant(status: string) {
   return status === "Verified" ? "default" : "outline";
+}
+
+function displayValue(value: string | null) {
+  return value ?? "Not available";
 }
 
 export default async function PassportDetailsPage({
@@ -57,12 +65,15 @@ export default async function PassportDetailsPage({
           </h1>
 
           <p className="mt-1 text-muted-foreground">
-            Digital magnet passport details and verification information.
+            Digital magnet passport details, composition,
+            performance, provenance and compliance information.
           </p>
         </div>
 
         <Badge
-          variant={getStatusVariant(passport.verificationStatus)}
+          variant={getStatusVariant(
+            passport.verificationStatus
+          )}
           className="w-fit"
         >
           {passport.verificationStatus}
@@ -71,11 +82,33 @@ export default async function PassportDetailsPage({
 
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList className="h-auto flex-wrap">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="composition">Composition</TabsTrigger>
-          <TabsTrigger value="provenance">Provenance</TabsTrigger>
-          <TabsTrigger value="circularity">Circularity</TabsTrigger>
-          <TabsTrigger value="verification">Verification</TabsTrigger>
+          <TabsTrigger value="overview">
+            Overview
+          </TabsTrigger>
+
+          <TabsTrigger value="composition">
+            Composition
+          </TabsTrigger>
+
+          <TabsTrigger value="performance">
+            Performance
+          </TabsTrigger>
+
+          <TabsTrigger value="provenance">
+            Provenance
+          </TabsTrigger>
+
+          <TabsTrigger value="circularity">
+            Circularity
+          </TabsTrigger>
+
+          <TabsTrigger value="compliance">
+            Compliance
+          </TabsTrigger>
+
+          <TabsTrigger value="verification">
+            Verification
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview">
@@ -88,46 +121,19 @@ export default async function PassportDetailsPage({
               <dl className="grid gap-6 sm:grid-cols-2">
                 <div>
                   <dt className="text-sm text-muted-foreground">
-                    Passport ID
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {passport.passportId}
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Type
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {passport.type}
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Application
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {passport.application}
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Lifecycle
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {passport.lifecycle}
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className="text-sm text-muted-foreground">
                     Origin
                   </dt>
                   <dd className="mt-1 font-medium">
                     {passport.origin}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Current Stage
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.currentStage}
                   </dd>
                 </div>
 
@@ -140,24 +146,55 @@ export default async function PassportDetailsPage({
                   </dd>
                 </div>
 
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Carbon Footprint
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {displayValue(
+                      passport.carbonFootprint
+                    )}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Radioactivity Status
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {displayValue(
+                      passport.radioactivityStatus
+                    )}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Conflict-Free Status
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {displayValue(
+                      passport.conflictFreeStatus
+                    )}
+                  </dd>
+                </div>
+
                 <div className="sm:col-span-2">
                   <dt className="text-sm text-muted-foreground">
-                    Compliance
+                    Certification Summary
                   </dt>
 
-                  <dd className="mt-2 flex flex-wrap gap-3">
-                    {passport.compliance.cbam && (
-                      <span className="flex items-center gap-2 font-medium">
-                        <CheckCircle2 className="h-4 w-4" />
-                        CBAM
-                      </span>
-                    )}
-
-                    {passport.compliance.crma && (
-                      <span className="flex items-center gap-2 font-medium">
-                        <CheckCircle2 className="h-4 w-4" />
-                        CRMA
-                      </span>
+                  <dd className="mt-3 flex flex-wrap gap-2">
+                    {passport.certifications.map(
+                      (certification) => (
+                        <Badge
+                          key={certification.name}
+                          variant="outline"
+                        >
+                          {certification.name}:{" "}
+                          {certification.status}
+                        </Badge>
+                      )
                     )}
                   </dd>
                 </div>
@@ -172,21 +209,154 @@ export default async function PassportDetailsPage({
               <CardTitle>Composition</CardTitle>
             </CardHeader>
 
+            <CardContent className="space-y-6">
+              <div>
+                <h3 className="font-semibold">
+                  Public View — Presence
+                </h3>
+
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {passport.composition.map(
+                    (element) => (
+                      <div
+                        key={element.symbol}
+                        className="flex items-center justify-between rounded-lg border p-4"
+                      >
+                        <span className="font-medium">
+                          Contains {element.symbol}
+                        </span>
+
+                        {element.present ? (
+                          <CheckCircle2 className="h-5 w-5" />
+                        ) : (
+                          <CircleX className="h-5 w-5" />
+                        )}
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold">
+                  Partner View — Range
+                </h3>
+
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {passport.composition.map(
+                    (element) => (
+                      <div
+                        key={element.symbol}
+                        className="rounded-lg border p-4"
+                      >
+                        <p className="font-medium">
+                          {element.symbol}
+                        </p>
+
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          {element.range ??
+                            "Range not available"}
+                        </p>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold">
+                  Recycler View — Exact Values
+                </h3>
+
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {passport.composition.map(
+                    (element) => (
+                      <div
+                        key={element.symbol}
+                        className="rounded-lg border p-4"
+                      >
+                        <p className="font-medium">
+                          {element.symbol}
+                        </p>
+
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          {element.exactValue !== null
+                            ? `${element.exactValue}${element.unit}`
+                            : "Exact value not available"}
+                        </p>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="performance">
+          <Card>
+            <CardHeader>
+              <CardTitle>Performance</CardTitle>
+            </CardHeader>
+
             <CardContent>
-              <dl className="grid gap-4 sm:grid-cols-2">
-                {Object.entries(passport.composition).map(
-                  ([element, visibility]) => (
-                    <div
-                      key={element}
-                      className="flex items-center justify-between rounded-lg border p-4"
-                    >
-                      <dt className="font-medium">{element}</dt>
-                      <dd className="text-muted-foreground">
-                        {visibility}
-                      </dd>
-                    </div>
-                  )
-                )}
+              <dl className="grid gap-6 sm:grid-cols-2">
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Grade
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {displayValue(
+                      passport.performance.grade
+                    )}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Coercivity
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {displayValue(
+                      passport.performance.coercivity
+                    )}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Remanence
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {displayValue(
+                      passport.performance.remanence
+                    )}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Temperature Class
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {displayValue(
+                      passport.performance
+                        .temperatureClass
+                    )}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Performance Category
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {displayValue(
+                      passport.performance
+                        .performanceCategory
+                    )}
+                  </dd>
+                </div>
               </dl>
             </CardContent>
           </Card>
@@ -199,13 +369,22 @@ export default async function PassportDetailsPage({
             </CardHeader>
 
             <CardContent>
-              <dl>
+              <dl className="grid gap-6 sm:grid-cols-2">
                 <div>
                   <dt className="text-sm text-muted-foreground">
                     Origin
                   </dt>
                   <dd className="mt-1 font-medium">
                     {passport.origin}
+                  </dd>
+                </div>
+
+                <div>
+                  <dt className="text-sm text-muted-foreground">
+                    Current Stage
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {passport.currentStage}
                   </dd>
                 </div>
               </dl>
@@ -243,45 +422,80 @@ export default async function PassportDetailsPage({
           </Card>
         </TabsContent>
 
+        <TabsContent value="compliance">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                Compliance and Certification
+              </CardTitle>
+            </CardHeader>
+
+            <CardContent>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {passport.certifications.map(
+                  (certification) => (
+                    <div
+                      key={certification.name}
+                      className="rounded-lg border p-4"
+                    >
+                      <p className="font-medium">
+                        {certification.name}
+                      </p>
+
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {certification.status}
+                      </p>
+                    </div>
+                  )
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
         <TabsContent value="verification">
           <Card>
             <CardHeader>
               <CardTitle>Verification</CardTitle>
             </CardHeader>
 
-            <CardContent>
-              <dl className="grid gap-6 sm:grid-cols-2">
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    Verification Status
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {passport.verificationStatus}
-                  </dd>
-                </div>
+            <CardContent className="space-y-4">
+              <div className="rounded-lg border p-4">
+                <p className="text-sm text-muted-foreground">
+                  Verification Status
+                </p>
+                <p className="mt-1 font-medium">
+                  {passport.verificationStatus}
+                </p>
+              </div>
 
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    CBAM
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {passport.compliance.cbam
-                      ? "Compliant"
-                      : "Not Compliant"}
-                  </dd>
-                </div>
+              <div className="rounded-lg border p-4">
+                ✓ Contains Nd
+              </div>
 
-                <div>
-                  <dt className="text-sm text-muted-foreground">
-                    CRMA
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {passport.compliance.crma
-                      ? "Compliant"
-                      : "Not Compliant"}
-                  </dd>
-                </div>
-              </dl>
+              <div className="rounded-lg border p-4">
+                ✓ Contains Dy
+              </div>
+
+              <div className="rounded-lg border p-4">
+                ✓ Recycled Content &gt; 20%
+              </div>
+
+              <div className="rounded-lg border p-4">
+                ✓ Origin Verified
+              </div>
+
+              <div className="rounded-lg border p-4">
+                ✓ CRMA Compliant
+              </div>
+
+              <div className="rounded-lg border p-4">
+                ✓ CBAM Compliant
+              </div>
+
+              <div className="rounded-lg border p-4">
+                ✓ ESG Compliant
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

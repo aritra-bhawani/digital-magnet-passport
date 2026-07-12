@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  ClipboardCheck,
   FileText,
   GitBranch,
   LayoutDashboard,
@@ -51,6 +52,13 @@ export function Header() {
       >
         <ShieldCheck className="h-4 w-4" />
         Verification
+      </Link>
+      <Link
+        href="/compliance"
+        className="flex flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
+      >
+        <ClipboardCheck className="h-4 w-4" />
+        Compliance
       </Link>
       </nav>
     </header>

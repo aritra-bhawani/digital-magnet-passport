@@ -21,7 +21,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import { mockPassports } from "@/data/mock-passports";
-
+import { CompositionDisclosure } from "@/components/passport/composition-disclosure";
 type PassportDetailsPageProps = {
   params: Promise<{
     id: string;
@@ -204,93 +204,9 @@ export default async function PassportDetailsPage({
         </TabsContent>
 
         <TabsContent value="composition">
-          <Card>
-            <CardHeader>
-              <CardTitle>Composition</CardTitle>
-            </CardHeader>
-
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="font-semibold">
-                  Public View — Presence
-                </h3>
-
-                <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                  {passport.composition.map(
-                    (element) => (
-                      <div
-                        key={element.symbol}
-                        className="flex items-center justify-between rounded-lg border p-4"
-                      >
-                        <span className="font-medium">
-                          Contains {element.symbol}
-                        </span>
-
-                        {element.present ? (
-                          <CheckCircle2 className="h-5 w-5" />
-                        ) : (
-                          <CircleX className="h-5 w-5" />
-                        )}
-                      </div>
-                    )
-                  )}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="font-semibold">
-                  Partner View — Range
-                </h3>
-
-                <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                  {passport.composition.map(
-                    (element) => (
-                      <div
-                        key={element.symbol}
-                        className="rounded-lg border p-4"
-                      >
-                        <p className="font-medium">
-                          {element.symbol}
-                        </p>
-
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          {element.range ??
-                            "Range not available"}
-                        </p>
-                      </div>
-                    )
-                  )}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="font-semibold">
-                  Recycler View — Exact Values
-                </h3>
-
-                <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                  {passport.composition.map(
-                    (element) => (
-                      <div
-                        key={element.symbol}
-                        className="rounded-lg border p-4"
-                      >
-                        <p className="font-medium">
-                          {element.symbol}
-                        </p>
-
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          {element.exactValue !== null
-                            ? `${element.exactValue}${element.unit}`
-                            : "Exact value not available"}
-                        </p>
-                      </div>
-                    )
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <CompositionDisclosure
+            composition={passport.composition}
+          />
         </TabsContent>
 
         <TabsContent value="performance">

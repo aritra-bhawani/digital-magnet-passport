@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Float, Date, DateTime, Boolean
+from sqlalchemy import Column, Integer, String, Float, Date, DateTime, Boolean, ForeignKey
 from app.database import Base
 
 class Passport(Base):

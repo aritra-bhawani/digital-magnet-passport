@@ -17,6 +17,8 @@ def init_db():
         conn.execute(text(f"CREATE DATABASE IF NOT EXISTS `{db_name}`"))
     tmp.dispose()
     import app.models.passport
+    import app.models.company
+    import app.models.supply_chain_edge
     Base.metadata.create_all(bind=engine)
 
 def get_db():

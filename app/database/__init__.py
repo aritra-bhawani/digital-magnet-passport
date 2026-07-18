@@ -25,6 +25,7 @@ def init_db():
     import app.models.passport_compliance
     import app.models.company
     import app.models.supply_chain_edge
+    import app.models.verification_claim
     Base.metadata.create_all(bind=engine)
 
 def get_db():

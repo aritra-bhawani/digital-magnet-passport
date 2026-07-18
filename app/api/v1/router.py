@@ -9,11 +9,11 @@ from app.models.audit_log import AuditLog
 from app.schemas.passport import PassportCreate, PassportUpdate, PassportOut
 from app.schemas.user import RegisterRequest, LoginRequest
 from app.auth import hash_password, verify_password, create_token, get_current_user, require_roles
-from app.utils import log_action
+from app.utils import log_action, composition_presence, composition_ranges, composition_exact, composition_full
 
 router = APIRouter()
 
-ALL_ROLES = ["PUBLIC", "MANUFACTURER", "RECYCLER", "AUDITOR", "REGULATOR", "ADMIN"]
+ALL_ROLES = ["PUBLIC", "PARTNER", "MANUFACTURER", "RECYCLER", "AUDITOR", "REGULATOR", "ADMIN"]
 RECYCLER_AND_ABOVE = ["MANUFACTURER", "RECYCLER", "AUDITOR", "REGULATOR", "ADMIN"]
 AUDITOR_AND_ABOVE = ["AUDITOR", "REGULATOR", "ADMIN"]
 
@@ -98,11 +98,22 @@ def get_provenance(id: int, db: Session = Depends(get_db), user: User = Depends(
     return {"path": path}
 
 @router.get("/passport/{id}/composition")
-def get_composition(id: int, db: Session = Depends(get_db), user: User = Depends(require_roles(RECYCLER_AND_ABOVE))):
+def get_composition(id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     from app.models.passport_material import PassportMaterial
     result = db.query(PassportMaterial).filter(PassportMaterial.passport_id == id).first()
+    if not result:
+        raise HTTPException(status_code=404, detail="Composition not found")
     log_action(db, user.id, "VIEW_COMPOSITION", "passport", id)
-    return result
+    role = user.role
+    if role == "PUBLIC":
+        return composition_presence(result)
+    elif role == "PARTNER":
+        return composition_ranges(result)
+    elif role in ["RECYCLER", "AUDITOR"]:
+        return composition_exact(result)
+    else:
+        # MANUFACTURER, REGULATOR, ADMIN get full data
+        return composition_full(result)
 
 @router.get("/passport/{id}/audit")
 def get_audit(id: int, db: Session = Depends(get_db), user: User = Depends(require_roles(AUDITOR_AND_ABOVE))):

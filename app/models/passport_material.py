@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, Float, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, DateTime, ForeignKey
 from app.database import Base
 
 # element composition by weight % (Nd, Pr, Dy, Tb, Ce, La, Sm, Fe, B)
@@ -17,5 +17,9 @@ class PassportMaterial(Base):
     sm = Column(Float, nullable=True)
     fe = Column(Float, nullable=True)
     b = Column(Float, nullable=True)
+    magnet_grade = Column(String(50), nullable=True)
+    coercivity = Column(Float, nullable=True)
+    remanence = Column(Float, nullable=True)
+    temperature_class = Column(String(50), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

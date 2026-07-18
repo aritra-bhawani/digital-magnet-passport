@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime
 from app.database import Base
 
-# roles: PUBLIC, MANUFACTURER, RECYCLER, AUDITOR, REGULATOR, ADMIN
+# roles: PUBLIC, PARTNER, MANUFACTURER, RECYCLER, AUDITOR, REGULATOR, ADMIN
 class User(Base):
     __tablename__ = "user"
 

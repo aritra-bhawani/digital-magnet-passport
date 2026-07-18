@@ -1,21 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from pydantic import BaseModel
 from app.database import get_db
 from app.models.passport_sustainability import PassportSustainability
 from app.models.passport_material import PassportMaterial
 from app.models.verification_claim import VerificationClaim
+from app.schemas.verify import RecycledVerifyRequest, ElementVerifyRequest
 
 router = APIRouter()
-
-class RecycledVerifyRequest(BaseModel):
-    passport_id: int
-    threshold: float
-
-class ElementVerifyRequest(BaseModel):
-    passport_id: int
-    element: str
-    threshold: float
 
 def save_claim(db, passport_id, claim_type, result):
     claim = VerificationClaim(passport_id=passport_id, claim_type=claim_type, result=result)

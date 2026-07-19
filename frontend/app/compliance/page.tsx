@@ -18,14 +18,13 @@ export default function CompliancePage() {
         </h1>
 
         <p className="mt-1 text-muted-foreground">
-          Review certification records and compliance status for the
-          digital magnet passport.
+          Review certification records, compliance claims and recycled-content certification.
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Passport</CardTitle>
+          <CardTitle>Passport Summary</CardTitle>
         </CardHeader>
 
         <CardContent>
@@ -34,7 +33,6 @@ export default function CompliancePage() {
               <dt className="text-sm text-muted-foreground">
                 Passport ID
               </dt>
-
               <dd className="mt-1 font-medium">
                 {passport.passportId}
               </dd>
@@ -44,7 +42,6 @@ export default function CompliancePage() {
               <dt className="text-sm text-muted-foreground">
                 Type
               </dt>
-
               <dd className="mt-1 font-medium">
                 {passport.type}
               </dd>
@@ -54,7 +51,6 @@ export default function CompliancePage() {
               <dt className="text-sm text-muted-foreground">
                 Application
               </dt>
-
               <dd className="mt-1 font-medium">
                 {passport.application}
               </dd>
@@ -63,9 +59,9 @@ export default function CompliancePage() {
         </CardContent>
       </Card>
 
-      <section>
-        <h2 className="mb-4 text-xl font-semibold">
-          Certification
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold">
+          Certification Records
         </h2>
 
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">

@@ -22,10 +22,10 @@ export function Header() {
         </div>
       </div>
 
-      <nav className="flex border-t md:hidden">
+      <nav className="flex overflow-x-auto border-t md:hidden">
         <Link
           href="/dashboard"
-          className="flex flex-1 items-center justify-center gap-2 px-3 py-3 text-sm font-medium hover:bg-muted"
+          className="flex min-w-fit flex-1 items-center justify-center gap-2 px-3 py-3 text-sm font-medium hover:bg-muted"
         >
           <LayoutDashboard className="h-4 w-4" />
           Dashboard
@@ -33,7 +33,7 @@ export function Header() {
 
         <Link
           href="/passport"
-          className="flex flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
+          className="flex min-w-fit flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
         >
           <FileText className="h-4 w-4" />
           Passports
@@ -41,25 +41,27 @@ export function Header() {
 
         <Link
           href="/provenance"
-          className="flex flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
+          className="flex min-w-fit flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
         >
           <GitBranch className="h-4 w-4" />
           Provenance
         </Link>
+
         <Link
-        href="/verification"
-        className="flex flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
-      >
-        <ShieldCheck className="h-4 w-4" />
-        Verification
-      </Link>
-      <Link
-        href="/compliance"
-        className="flex flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
-      >
-        <ClipboardCheck className="h-4 w-4" />
-        Compliance
-      </Link>
+          href="/verification"
+          className="flex min-w-fit flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
+        >
+          <ShieldCheck className="h-4 w-4" />
+          Verification
+        </Link>
+
+        <Link
+          href="/compliance"
+          className="flex min-w-fit flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
+        >
+          <ClipboardCheck className="h-4 w-4" />
+          Compliance
+        </Link>
       </nav>
     </header>
   );

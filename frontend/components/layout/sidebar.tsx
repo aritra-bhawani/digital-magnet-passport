@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  ClipboardCheck,
   FileText,
   GitBranch,
   LayoutDashboard,
@@ -29,6 +30,11 @@ const navigation = [
     name: "Verification",
     href: "/verification",
     icon: ShieldCheck,
+  },
+  {
+    name: "Compliance",
+    href: "/compliance",
+    icon: ClipboardCheck,
   },
 ];
 

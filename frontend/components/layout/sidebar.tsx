@@ -7,6 +7,7 @@ import {
   FileText,
   GitBranch,
   LayoutDashboard,
+  Recycle,
   ShieldCheck,
 } from "lucide-react";
 
@@ -35,6 +36,11 @@ const navigation = [
     name: "Compliance",
     href: "/compliance",
     icon: ClipboardCheck,
+  },
+  {
+    name: "Circularity",
+    href: "/circularity",
+    icon: Recycle,
   },
 ];
 

@@ -4,6 +4,7 @@ import {
   FileText,
   GitBranch,
   LayoutDashboard,
+  Recycle,
   ShieldCheck,
 } from "lucide-react";
 
@@ -61,6 +62,14 @@ export function Header() {
         >
           <ClipboardCheck className="h-4 w-4" />
           Compliance
+        </Link>
+
+        <Link
+          href="/circularity"
+          className="flex min-w-fit flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
+        >
+          <Recycle className="h-4 w-4" />
+          Circularity
         </Link>
       </nav>
     </header>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  Bot,
   ClipboardCheck,
   FileText,
   GitBranch,
@@ -70,6 +71,13 @@ export function Header() {
         >
           <Recycle className="h-4 w-4" />
           Circularity
+        </Link>
+        <Link
+          href="/assistant"
+          className="flex min-w-fit flex-1 items-center justify-center gap-2 border-l px-3 py-3 text-sm font-medium hover:bg-muted"
+        >
+          <Bot className="h-4 w-4" />
+          Assistant
         </Link>
       </nav>
     </header>

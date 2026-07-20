@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  Bot,
   ClipboardCheck,
   FileText,
   GitBranch,
@@ -41,6 +42,11 @@ const navigation = [
     name: "Circularity",
     href: "/circularity",
     icon: Recycle,
+  },
+  {
+  name: "AI Assistant",
+  href: "/assistant",
+  icon: Bot,
   },
 ];
 
